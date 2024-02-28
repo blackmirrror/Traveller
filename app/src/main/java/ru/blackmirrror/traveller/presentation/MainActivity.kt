@@ -1,7 +1,8 @@
-package ru.blackmirrror.traveller
+package ru.blackmirrror.traveller.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.blackmirrror.traveller.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:padding="4dp"
+    android:paddingStart="8dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_item_subscribe"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_sub_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnSecondaryContainer"
+        tools:text="username"/>
+
+    <ImageView
+        android:id="@+id/btn_sub_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_mini"/>
+
+</LinearLayout>
