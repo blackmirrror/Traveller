@@ -5,95 +5,71 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.register.RegisterFragment">
+    tools:context=".features.register.RegisterFragment">
 
     <TextView
         android:id="@+id/tv_reg_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="20sp"
         android:text="@string/auth_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/et_reg_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/TextView.Title"/>
 
     <EditText
         android:id="@+id/et_reg_email"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
         android:hint="@string/hint_email"
-        android:padding="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/background_edit_text"
         app:layout_constraintTop_toBottomOf="@id/tv_reg_title"
         app:layout_constraintBottom_toTopOf="@id/et_reg_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"/>
+        app:layout_constraintHorizontal_chainStyle="packed"
+        style="@style/EditText"/>
 
     <EditText
         android:id="@+id/et_reg_password"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
         android:hint="@string/hint_password"
-        android:padding="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/background_edit_text"
         app:layout_constraintTop_toBottomOf="@id/et_reg_email"
         app:layout_constraintBottom_toTopOf="@id/et_reg_password_two"
         app:layout_constraintStart_toStartOf="@id/et_reg_email"
-        app:layout_constraintEnd_toEndOf="@id/et_reg_email"/>
+        app:layout_constraintEnd_toEndOf="@id/et_reg_email"
+        style="@style/EditText"/>
 
     <EditText
         android:id="@+id/et_reg_password_two"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
         android:hint="@string/hint_password"
-        android:padding="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/background_edit_text"
         app:layout_constraintTop_toBottomOf="@id/et_reg_password"
         app:layout_constraintBottom_toTopOf="@id/tv_reg_login"
         app:layout_constraintStart_toStartOf="@id/et_reg_email"
-        app:layout_constraintEnd_toEndOf="@id/et_reg_email"/>
+        app:layout_constraintEnd_toEndOf="@id/et_reg_email"
+        style="@style/EditText"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/btn_reg_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="7dp"
-        android:src="@drawable/ic_done"
-        android:background="@drawable/btn_auth_shape_bg"
         android:layout_marginStart="16dp"
+        android:src="@drawable/ic_done"
         app:layout_constraintTop_toTopOf="@id/et_reg_password_two"
         app:layout_constraintBottom_toBottomOf="@id/et_reg_password_two"
-        app:layout_constraintStart_toEndOf="@id/et_reg_password_two" />
+        app:layout_constraintStart_toEndOf="@id/et_reg_password_two"
+        style="@style/ImageButton.Blue"/>
 
     <TextView
         android:id="@+id/tv_reg_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="?attr/colorPrimaryVariant"
         android:text="@string/login_title"
         app:layout_constraintTop_toBottomOf="@id/et_reg_password_two"
         app:layout_constraintBottom_toTopOf="@id/tv_reg_quest"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/TextView.Auth"/>
 
     <TextView
         android:id="@+id/tv_reg_quest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="?attr/colorPrimaryVariant"
         android:text="@string/title_quest"
         app:layout_constraintTop_toBottomOf="@id/tv_reg_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/TextView.Auth"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

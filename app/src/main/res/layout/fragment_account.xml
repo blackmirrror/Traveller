@@ -3,23 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorPrimaryContainer"
-    tools:context=".presentation.account.AccountFragment">
+    tools:context=".features.account.AccountFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_account"
-        android:layout_width="match_parent"
-        app:title="@string/account_title"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageButton
+        android:id="@+id/btn_acc_close"
+        android:src="@drawable/ic_close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/ImageButton.Primary"/>
+
+    <TextView
+        android:id="@+id/tv_acc_title"
+        android:layout_marginStart="16dp"
+        android:text="@string/account_title"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_acc_close"
+        app:layout_constraintStart_toEndOf="@id/btn_acc_close"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/TextView.Title"/>
 
     <TextView
         android:id="@+id/tv_acc_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_account"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_acc_title"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="username"/>
 
@@ -28,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"
         android:text="@string/title_subscribe"
         app:layout_constraintTop_toBottomOf="@id/tv_acc_name"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -38,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/tv_acc_title_sub"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,13 +56,11 @@
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/btn_logout"
-        android:textColor="@color/deep_blue_500"
         android:backgroundTint="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/TextView.Auth"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

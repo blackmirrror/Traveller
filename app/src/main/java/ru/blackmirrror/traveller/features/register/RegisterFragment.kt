@@ -1,4 +1,4 @@
-package ru.blackmirrror.traveller.presentation.register
+package ru.blackmirrror.traveller.features.register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import ru.blackmirrror.traveller.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.blackmirrror.traveller.domain.models.UserRequest
 import ru.blackmirrror.traveller.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+    private val viewModel by viewModel<RegisterViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,17 +27,31 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setNavigation()
+        observeData()
     }
 
     private fun setNavigation() {
         binding.btnRegNext.setOnClickListener {
-            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
+            viewModel.register(
+                UserRequest(
+                    username = binding.etRegEmail.text.toString(),
+                    password = binding.etRegPassword.text.toString()
+                )
+            )
         }
         binding.tvRegLogin.setOnClickListener {
             findNavController().popBackStack()
         }
         binding.tvRegQuest.setOnClickListener {
+            viewModel.rememberAsGuest()
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
+        }
+    }
+
+    private fun observeData() {
+        viewModel.isRegister.observe(viewLifecycleOwner) {
+            if (it)
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
         }
     }
 }

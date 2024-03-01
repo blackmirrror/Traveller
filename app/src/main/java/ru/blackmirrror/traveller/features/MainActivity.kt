@@ -1,4 +1,4 @@
-package ru.blackmirrror.traveller.presentation
+package ru.blackmirrror.traveller.features
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

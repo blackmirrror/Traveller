@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditText">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:background">@drawable/background_edit_text</item>
+    </style>
+
+    <style name="EditText.Search">
+        <item name="android:drawableEnd">@drawable/ic_search</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:hint">@string/map_search_hint</item>
+    </style>
+
+    <style name="EditText.AddMark">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="ImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ImageButton.Blue">
+        <item name="android:background">@drawable/btn_auth_shape_bg</item>
+    </style>
+
+    <style name="ImageButton.Primary">
+        <item name="android:background">@drawable/background_btns</item>
+    </style>
+
+    <style name="TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="TextView.Auth">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="TextView.Title">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>

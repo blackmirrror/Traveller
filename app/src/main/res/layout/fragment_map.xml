@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryContainer"
-    tools:context=".presentation.map.MapFragment">
+    tools:context=".features.map.MapFragment">
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/map_view"
@@ -14,40 +14,31 @@
 
     <EditText
         android:id="@+id/et_map_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:hint="@string/map_search_hint"
-        android:background="@drawable/background_edit_text"
-        android:drawableEnd="@drawable/ic_search"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_filter"/>
+        app:layout_constraintEnd_toStartOf="@id/btn_filter"
+        style="@style/EditText.Search"/>
 
     <ImageButton
         android:id="@+id/btn_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:padding="16dp"
         android:src="@drawable/ic_filter"
-        android:background="@drawable/background_btns"
         app:layout_constraintTop_toTopOf="@id/et_map_search"
         app:layout_constraintStart_toEndOf="@id/et_map_search"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/ImageButton.Primary"/>
 
     <ImageButton
         android:id="@+id/btn_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:paddingTop="20dp"
-        android:paddingStart="19dp"
-        android:paddingBottom="20dp"
-        android:paddingEnd="19dp"
+        android:paddingTop="12dp"
+        android:paddingStart="11dp"
+        android:paddingBottom="12dp"
+        android:paddingEnd="11dp"
         android:src="@drawable/ic_list"
         android:background="@drawable/background_btns"
         app:layout_constraintStart_toStartOf="@id/et_map_search"
@@ -55,24 +46,18 @@
 
     <ImageButton
         android:id="@+id/btn_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:padding="16dp"
         android:src="@drawable/ic_favorite"
-        android:background="@drawable/background_btns"
         app:layout_constraintTop_toBottomOf="@id/btn_list"
-        app:layout_constraintStart_toStartOf="@id/et_map_search"/>
+        app:layout_constraintStart_toStartOf="@id/et_map_search"
+        style="@style/ImageButton.Primary"/>
 
     <ImageButton
         android:id="@+id/btn_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:padding="16dp"
         android:src="@drawable/ic_account"
-        android:background="@drawable/background_btns"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/ImageButton.Primary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
