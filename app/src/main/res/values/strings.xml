@@ -16,5 +16,12 @@
     <string name="hint_latitude">Широта</string>
     <string name="hint_longitude">Долгота</string>
     <string name="hint_description">Описание</string>
+    <string name="spinner_sort">Сортировка</string>
+
+    <string-array name="sortType">
+        <item>Нет</item>
+        <item>Автор</item>
+        <item>Лайки</item>
+    </string-array>
 
 </resources>

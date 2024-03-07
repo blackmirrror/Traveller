@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorPrimaryContainer"
     tools:context=".features.map.ListFragment">
 
     <ImageButton
         android:id="@+id/btn_list_close"
-        android:layout_marginStart="16dp"
         android:src="@drawable/ic_close"
         app:layout_constraintTop_toTopOf="@id/et_list_search"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,18 +18,27 @@
 
     <EditText
         android:id="@+id/et_list_search"
+        android:layout_marginTop="0dp"
         android:layout_marginHorizontal="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_list_close"
-        app:layout_constraintEnd_toStartOf="@id/btn_list_filter"
+        app:layout_constraintEnd_toStartOf="@id/btn_list_search"
         style="@style/EditText.Search"/>
 
     <ImageButton
+        android:id="@+id/btn_list_search"
+        android:src="@drawable/ic_done"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/et_list_search"
+        app:layout_constraintEnd_toStartOf="@id/btn_list_filter"
+        style="@style/ImageButton.Blue"/>
+
+    <ImageButton
         android:id="@+id/btn_list_filter"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         android:src="@drawable/ic_filter"
         app:layout_constraintTop_toTopOf="@id/et_list_search"
-        app:layout_constraintStart_toEndOf="@id/et_list_search"
+        app:layout_constraintStart_toEndOf="@id/btn_list_search"
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/ImageButton.Primary"/>
 
@@ -38,7 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/et_list_search"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +55,6 @@
 
     <ImageButton
         android:id="@+id/btn_add"
-        android:layout_margin="16dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,5 +81,30 @@
             android:id="@+id/ll_list_more_mark"
             layout="@layout/layout_more_about_mark"/>
     </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_filter_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/et_list_search">
+        <include
+            android:id="@+id/ll_filter_list"
+            layout="@layout/layout_filter_list"/>
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/deep_blue_500"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

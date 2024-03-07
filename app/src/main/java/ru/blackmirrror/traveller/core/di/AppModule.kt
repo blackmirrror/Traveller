@@ -12,7 +12,8 @@ val appModule = module {
         MapViewModel(
             getAllMarksUseCase = get(),
             createMarkUseCase = get(),
-            isLoggingUserUseCase = get()
+            isLoggingUserUseCase = get(),
+            getMarksByParameterUseCase = get()
         )
     }
 

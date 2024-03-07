@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
+    android:paddingVertical="16dp"
     android:background="?attr/colorPrimaryContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -38,11 +38,22 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/btn_more_close">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_more_description"
             android:text="Ваш большой текст здесь... sjdkfbh lajfd ali fnalefn ja;; f;aeo rfn rfnh;aer fa;o fa; ha;esfo rvgha;eor iha;oes fhg;aepi frhvaoesfnhpaef rvuapoidf vhapih vapies fuvhp hapesfo uhvapf hvasepf uvh r fa;o fa; ha;esfo rvgha;eor iha;oes fhg;aepi frhvaoesfnhpaef rvuapoidf vhapih vapies fuvhp hapesfo uhvapf hvasepf uvh dfkj nlsdf lskjdf nsldkfjv dfkj nlsdf lskjdf nsldkfjvn slkd insdfnjlrgnsdfk vgbs;df n;sdfg ;sdo sn;od n;d n;dsof ns;df ns;df gnsd;f gvns;df ons;dof nsdfo; nsdf ;gos;df nv;sd fn"
             style="@style/EditText.AddMark"/>
 
-    </ScrollView>
+        <ImageView
+            android:id="@+id/iv_more_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_launcher_background"/>
 
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

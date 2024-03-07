@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
+    android:paddingVertical="16dp"
     android:background="@drawable/background_add_mark">
 
     <ImageButton
@@ -19,6 +19,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/ImageButton.Blue"/>
+
+    <ImageButton
+        android:id="@+id/btn_img_ll"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_add_ll"
+        style="@style/ImageButton.Primary"/>
 
     <EditText
         android:id="@+id/et_add_latitude"

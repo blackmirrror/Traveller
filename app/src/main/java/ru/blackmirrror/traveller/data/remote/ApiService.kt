@@ -22,14 +22,15 @@ interface ApiService {
     @Multipart
     @POST("api/tags")
     suspend fun createTag(
-        @Header("Authorization") token: String?,
+        @Header("Authorization") token: String,
         @Part latitude: MultipartBody.Part,
         @Part longitude: MultipartBody.Part,
-        @Part description: MultipartBody.Part
+        @Part description: MultipartBody.Part,
+        @Part image: MultipartBody.Part? = null
     ): Response<MarkResponse>
 
     @POST("api/auth/register")
-    suspend fun registerUser(userRequest: UserRequest): Response<UserResponse>
+    suspend fun registerUser(@Body userRequest: UserRequest): Response<UserResponse>
 
     @Multipart
     @POST("api/auth/jwt/login")

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/colorPrimaryContainer">
+
+    <TextView
+        android:id="@+id/tv_filter_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/spinner_sort"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_filter_list"
+        app:layout_constraintBottom_toBottomOf="@id/btn_filter_list"/>
+
+    <Spinner
+        android:id="@+id/sp_sort_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:entries="@array/sortType"
+        app:layout_constraintTop_toTopOf="@id/btn_filter_list"
+        app:layout_constraintBottom_toBottomOf="@id/btn_filter_list"
+        app:layout_constraintStart_toEndOf="@id/tv_filter_sort"/>
+
+    <ImageButton
+        android:id="@+id/btn_filter_list"
+        android:layout_marginStart="16dp"
+        android:padding="3dp"
+        android:src="@drawable/ic_done"
+        app:layout_constraintStart_toEndOf="@id/sp_sort_list"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/ImageButton.Blue"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
