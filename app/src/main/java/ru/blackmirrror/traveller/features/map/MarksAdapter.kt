@@ -8,12 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.blackmirrror.traveller.R
-import ru.blackmirrror.traveller.domain.models.MarkResponse
+import ru.blackmirrror.traveller.domain.models.Mark
 import ru.blackmirrror.traveller.features.utils.TextFormatter
 
-class MarksAdapter: ListAdapter<MarkResponse, MarksAdapter.MarksViewHolder>(MarkItemCallback()) {
+class MarksAdapter: ListAdapter<Mark, MarksAdapter.MarksViewHolder>(MarkItemCallback()) {
 
-    var onMarkItemClickListener: ((MarkResponse) -> Unit)? = null
+    var onMarkItemClickListener: ((Mark) -> Unit)? = null
 
     class MarksViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val description = itemView.findViewById<TextView>(R.id.tv_mark_description)
@@ -31,10 +31,7 @@ class MarksAdapter: ListAdapter<MarkResponse, MarksAdapter.MarksViewHolder>(Mark
         with(holder) {
             description.text = mark.description
             likesAndAuthor.text = TextFormatter.likesAndAuthorToText(mark.likes, mark.user)
-            if (mark.isLiked)
-                like.setImageResource(R.drawable.ic_favorite_is)
-            else
-                like.setImageResource(R.drawable.ic_favorite)
+            like.setImageResource(R.drawable.ic_favorite)
             itemView.setOnClickListener {
                 onMarkItemClickListener?.invoke(mark)
             }

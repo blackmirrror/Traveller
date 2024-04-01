@@ -23,7 +23,7 @@ import com.yandex.runtime.image.ImageProvider
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.blackmirrror.traveller.R
 import ru.blackmirrror.traveller.databinding.FragmentMapBinding
-import ru.blackmirrror.traveller.domain.models.MarkResponse
+import ru.blackmirrror.traveller.domain.models.Mark
 import ru.blackmirrror.traveller.domain.models.SortType
 import ru.blackmirrror.traveller.features.utils.TextFormatter
 
@@ -34,7 +34,7 @@ class MapFragment : Fragment() {
 
     private lateinit var pinsCollection: MapObjectCollection
     private val placemarkTapListener = MapObjectTapListener { mapObject, _ ->
-        (mapObject.userData as? String)?.let { onMarkClick(it) }
+        (mapObject.userData as? Long)?.let { onMarkClick(it) }
         true
     }
 
@@ -121,7 +121,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun setMarks(marks: List<MarkResponse>) {
+    private fun setMarks(marks: List<Mark>) {
         pinsCollection.clear()
         val imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.ic_mark)
 
@@ -134,7 +134,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun onMarkClick(markId: String) {
+    private fun onMarkClick(markId: Long) {
         val mark = viewModel.getMarkById(markId)
         if (mark != null) {
             binding.flMapMoreMark.visibility = View.VISIBLE

@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiFactory {
 
-    private const val BASE_URL = "https://maps.rtuitlab.dev/"
+    private const val BASE_URL = "https://travellerbackend.onrender.com/"
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(makeLoggingInterceptor())
@@ -24,9 +24,7 @@ object ApiFactory {
     private fun makeApiKeyInterceptor(): Interceptor {
         return Interceptor { chain ->
             val originalRequest = chain.request()
-            val newRequest = originalRequest.newBuilder()
-                .header("Content-Type", "multipart/form-data")
-                .build()
+            val newRequest = originalRequest.newBuilder().build()
             chain.proceed(newRequest)
         }
     }

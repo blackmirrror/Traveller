@@ -1,41 +1,53 @@
 package ru.blackmirrror.traveller.data.remote
 
-import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
-import ru.blackmirrror.traveller.domain.models.LoginResponse
-import ru.blackmirrror.traveller.domain.models.MarkResponse
-import ru.blackmirrror.traveller.domain.models.ResultState
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import ru.blackmirrror.traveller.domain.models.Favorite
+import ru.blackmirrror.traveller.domain.models.Mark
+import ru.blackmirrror.traveller.domain.models.Subscribe
 import ru.blackmirrror.traveller.domain.models.UserRequest
 import ru.blackmirrror.traveller.domain.models.UserResponse
 
 interface ApiService {
 
-    @GET("api/tags")
-    suspend fun getAllTags(): Response<List<MarkResponse>>
-
-    @Multipart
-    @POST("api/tags")
-    suspend fun createTag(
-        @Header("Authorization") token: String,
-        @Part latitude: MultipartBody.Part,
-        @Part longitude: MultipartBody.Part,
-        @Part description: MultipartBody.Part,
-        @Part image: MultipartBody.Part? = null
-    ): Response<MarkResponse>
-
-    @POST("api/auth/register")
+    @POST("users/register")
     suspend fun registerUser(@Body userRequest: UserRequest): Response<UserResponse>
 
-    @Multipart
-    @POST("api/auth/jwt/login")
-    suspend fun loginUser(
-        @Part username: MultipartBody.Part,
-        @Part password: MultipartBody.Part
-    ): Response<LoginResponse>
+    @POST("users/login")
+    suspend fun loginUser(@Body userRequest: UserRequest): Response<UserResponse>
+
+    @GET("marks")
+    suspend fun getAllMarks(): Response<List<Mark>>
+
+    @POST("marks")
+    suspend fun createMark(@Body mark: Mark): Response<Mark>
+
+    @PUT("marks/{id}")
+    suspend fun updateMark(@Path("id") id: Long, @Body mark: Mark): Response<Mark>
+
+    @DELETE("marks/{id}")
+    suspend fun deleteMark(@Path("id") id: Long): Response<Unit>
+
+    @GET("favorite/{id}")
+    suspend fun getAllFavoriteMarksByUserId(@Path("id") id: Long): Response<List<Mark>>
+
+    @POST("favorite")
+    suspend fun createFavorite(@Body favorite: Favorite): Response<Favorite>
+
+    @DELETE("favorite/{id}")
+    suspend fun deleteFavorite(@Path("id") id: Long): Response<Unit>
+
+    @GET("subscribes/{id}")
+    suspend fun getAllSubscribesByUserId(@Path("id") id: Long): Response<List<UserResponse>>
+
+    @POST("subscribes")
+    suspend fun createSubscribe(@Body subscribe: Subscribe): Response<Subscribe>
+
+    @DELETE("subscribes/{id}")
+    suspend fun deleteSubscribe(@Path("id") id: Long): Response<Unit>
 }

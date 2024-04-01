@@ -12,12 +12,13 @@ import ru.blackmirrror.traveller.domain.repositories.MarkRepository
 val dataModule = module {
     single<MarkRepository> {
         MarkRepositoryImpl(
-            service = get(),
-            userPrefs = get())
+            service = get()
+        )
     }
 
     single<AuthRepository> {
         AuthRepositoryImpl(
+            context = get(),
             service = get(),
             userPrefs = get()
         )

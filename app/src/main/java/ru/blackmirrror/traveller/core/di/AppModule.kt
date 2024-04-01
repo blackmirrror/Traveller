@@ -12,7 +12,8 @@ val appModule = module {
         MapViewModel(
             getAllMarksUseCase = get(),
             createMarkUseCase = get(),
-            isLoggingUserUseCase = get(),
+            isGuestUseCase = get(),
+            isLoginUserUseCase = get(),
             getMarksByParameterUseCase = get()
         )
     }
@@ -33,7 +34,9 @@ val appModule = module {
 
     viewModel {
         AccountViewModel(
-            logoutUserUseCase = get()
+            logoutUserUseCase = get(),
+            isGuestUseCase = get(),
+            getCurrentUserUseCase = get()
         )
     }
 }

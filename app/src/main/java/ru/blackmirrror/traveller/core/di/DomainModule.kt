@@ -3,8 +3,10 @@ package ru.blackmirrror.traveller.core.di
 import org.koin.dsl.module
 import ru.blackmirrror.traveller.domain.usecases.CreateMarkUseCase
 import ru.blackmirrror.traveller.domain.usecases.GetAllMarksUseCase
+import ru.blackmirrror.traveller.domain.usecases.GetCurrentUserUseCase
 import ru.blackmirrror.traveller.domain.usecases.GetMarksByParameterUseCase
-import ru.blackmirrror.traveller.domain.usecases.IsLoggingUserUseCase
+import ru.blackmirrror.traveller.domain.usecases.IsGuestUseCase
+import ru.blackmirrror.traveller.domain.usecases.IsLoginUserUseCase
 import ru.blackmirrror.traveller.domain.usecases.LoginUserUseCase
 import ru.blackmirrror.traveller.domain.usecases.LogoutUserUseCase
 import ru.blackmirrror.traveller.domain.usecases.RegisterUserUseCase
@@ -28,11 +30,19 @@ val domainModule = module {
     }
 
     factory {
-        IsLoggingUserUseCase(authRepository = get())
+        IsGuestUseCase(authRepository = get())
+    }
+
+    factory {
+        IsLoginUserUseCase(authRepository = get())
     }
 
     factory {
         RememberAsGuest(authRepository = get())
+    }
+
+    factory {
+        GetCurrentUserUseCase(authRepository = get())
     }
 
     factory {

@@ -1,14 +1,14 @@
 package ru.blackmirrror.traveller.features.map
 
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import ru.blackmirrror.traveller.domain.models.MarkResponse
+import ru.blackmirrror.traveller.domain.models.Mark
 
-class MarkItemCallback: ItemCallback<MarkResponse>() {
-    override fun areItemsTheSame(oldItem: MarkResponse, newItem: MarkResponse): Boolean {
+class MarkItemCallback: ItemCallback<Mark>() {
+    override fun areItemsTheSame(oldItem: Mark, newItem: Mark): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: MarkResponse, newItem: MarkResponse): Boolean {
+    override fun areContentsTheSame(oldItem: Mark, newItem: Mark): Boolean {
         return oldItem == newItem
     }
 }

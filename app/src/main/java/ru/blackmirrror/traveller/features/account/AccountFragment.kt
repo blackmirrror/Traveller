@@ -27,6 +27,7 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setNavigation()
+        observeData()
     }
 
     private fun setNavigation() {
@@ -36,6 +37,18 @@ class AccountFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
             findNavController().navigate(AccountFragmentDirections.actionAccountFragmentToLoginFragment())
+        }
+    }
+
+    private fun observeData() {
+        viewModel.isGuest.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.btnLogout.text = "Войти"
+                binding.tvAccName.text = "Гость"
+            }
+        }
+        viewModel.currentUser.observe(viewLifecycleOwner) {
+            binding.tvAccName.text = it?.username ?: "Гость"
         }
     }
 }

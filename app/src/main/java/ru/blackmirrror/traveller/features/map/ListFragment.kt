@@ -65,12 +65,6 @@ class ListFragment : Fragment() {
                 tvMoreCoordinates.text = TextFormatter.coordinatesToText(it.latitude, it.longitude)
                 tvMoreLikesAndAuthor.text = TextFormatter.likesAndAuthorToText(it.likes, it.user)
 
-                if (it.image != null) {
-                    val decodedBytes: ByteArray = Base64.decode(it.image, Base64.DEFAULT)
-                    val bitmap: Bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-                    ivMoreImage.setImageBitmap(bitmap)
-                }
-
                 btnMoreClose.setOnClickListener {
                     binding.flListMoreMark.visibility = View.GONE
                 }

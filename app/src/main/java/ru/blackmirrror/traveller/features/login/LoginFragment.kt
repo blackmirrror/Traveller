@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.blackmirrror.traveller.domain.models.UserRequest
@@ -52,6 +53,9 @@ class LoginFragment : Fragment() {
         viewModel.isLogin.observe(viewLifecycleOwner) {
             if (it)
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
+        }
+        viewModel.error.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 }
