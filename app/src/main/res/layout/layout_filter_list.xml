@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="16dp"
+    android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorPrimaryContainer">
 
@@ -13,6 +13,7 @@
         android:text="@string/spinner_sort"
         android:textColor="?attr/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/sp_sort_list"
         app:layout_constraintTop_toTopOf="@id/btn_filter_list"
         app:layout_constraintBottom_toBottomOf="@id/btn_filter_list"/>
 
@@ -24,14 +25,24 @@
         android:entries="@array/sortType"
         app:layout_constraintTop_toTopOf="@id/btn_filter_list"
         app:layout_constraintBottom_toBottomOf="@id/btn_filter_list"
-        app:layout_constraintStart_toEndOf="@id/tv_filter_sort"/>
+        app:layout_constraintStart_toEndOf="@id/tv_filter_sort"
+        app:layout_constraintEnd_toStartOf="@id/btn_favorite_list"/>
+
+    <ImageButton
+        android:id="@+id/btn_favorite_list"
+        android:layout_marginStart="16dp"
+        android:padding="3dp"
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintStart_toEndOf="@id/sp_sort_list"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/ImageButton.Primary"/>
 
     <ImageButton
         android:id="@+id/btn_filter_list"
         android:layout_marginStart="16dp"
         android:padding="3dp"
         android:src="@drawable/ic_done"
-        app:layout_constraintStart_toEndOf="@id/sp_sort_list"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/ImageButton.Blue"/>
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "821263535712",
+    "project_id": "traveller-2525a",
+    "storage_bucket": "traveller-2525a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821263535712:android:cc81eda6415e19f3ca7d05",
+        "android_client_info": {
+          "package_name": "ru.blackmirrror.traveller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv3S9v8ZgmQ5Aq0CmHke3clS_tc7rkrxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

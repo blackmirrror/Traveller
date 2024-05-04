@@ -5,6 +5,7 @@ import ru.blackmirrror.traveller.domain.models.ErrorType
 import ru.blackmirrror.traveller.domain.models.Mark
 import ru.blackmirrror.traveller.domain.models.ResultState
 import ru.blackmirrror.traveller.domain.repositories.MarkRepository
+import java.util.Date
 
 class CreateMarkUseCase(private val markRepository: MarkRepository) {
     suspend operator fun invoke(
@@ -22,7 +23,9 @@ class CreateMarkUseCase(private val markRepository: MarkRepository) {
                 description = description,
                 latitude = latitude.toDouble(),
                 longitude = longitude.toDouble(),
-                imageUrl = imageUrl
+                imageUrl = imageUrl,
+                dateCreate = Date().time,
+                dateChanges = Date().time
             )
         )
     }

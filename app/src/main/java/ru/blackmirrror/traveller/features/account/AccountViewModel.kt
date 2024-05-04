@@ -4,14 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.blackmirrror.traveller.domain.models.UserResponse
-import ru.blackmirrror.traveller.domain.usecases.GetCurrentUserUseCase
-import ru.blackmirrror.traveller.domain.usecases.IsGuestUseCase
-import ru.blackmirrror.traveller.domain.usecases.LogoutUserUseCase
+import ru.blackmirrror.traveller.domain.repositories.AuthRepository
 
 class AccountViewModel(
-    private val logoutUserUseCase: LogoutUserUseCase,
-    private val isGuestUseCase: IsGuestUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     private val _isGuest = MutableLiveData<Boolean>()
@@ -24,11 +20,11 @@ class AccountViewModel(
     }
 
     private fun initUser() {
-        _isGuest.postValue(isGuestUseCase.invoke())
-        _currentUser.postValue(getCurrentUserUseCase.invoke())
+        _isGuest.postValue(authRepository.isGuest())
+        _currentUser.postValue(authRepository.getCurrentUser())
     }
 
     fun logout() {
-        logoutUserUseCase.invoke()
+        authRepository.logout()
     }
 }

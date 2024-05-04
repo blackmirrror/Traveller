@@ -7,21 +7,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.blackmirrror.traveller.domain.models.Conflict
 import ru.blackmirrror.traveller.domain.models.EmptyFields
-import ru.blackmirrror.traveller.domain.models.ErrorType
-import ru.blackmirrror.traveller.domain.models.NoContent
 import ru.blackmirrror.traveller.domain.models.NoInternet
-import ru.blackmirrror.traveller.domain.models.NotFound
 import ru.blackmirrror.traveller.domain.models.OtherError
 import ru.blackmirrror.traveller.domain.models.ResultState
 import ru.blackmirrror.traveller.domain.models.ServerError
 import ru.blackmirrror.traveller.domain.models.UserRequest
 import ru.blackmirrror.traveller.domain.repositories.AuthRepository
 import ru.blackmirrror.traveller.domain.usecases.RegisterUserUseCase
-import ru.blackmirrror.traveller.domain.usecases.RememberAsGuest
 
 class RegisterViewModel(
     private val registerUserUseCase: RegisterUserUseCase,
-    private val rememberAsGuest: RememberAsGuest
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     private val _isRegister = MutableLiveData<Boolean>()
@@ -57,6 +53,6 @@ class RegisterViewModel(
     }
 
     fun rememberAsGuest() {
-        rememberAsGuest.invoke()
+        authRepository.rememberAsGuest()
     }
 }

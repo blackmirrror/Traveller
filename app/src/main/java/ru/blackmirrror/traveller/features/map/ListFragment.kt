@@ -14,11 +14,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.blackmirrror.traveller.databinding.FragmentListBinding
 import ru.blackmirrror.traveller.domain.models.SortType
+import ru.blackmirrror.traveller.features.utils.HideKeyboard
+import ru.blackmirrror.traveller.features.utils.ImageLoader
 import ru.blackmirrror.traveller.features.utils.TextFormatter
 import java.io.InputStream
 
@@ -59,11 +65,20 @@ class ListFragment : Fragment() {
 
         marksAdapter.onMarkItemClickListener = {
             binding.flListMoreMark.visibility = View.VISIBLE
+            binding.flAddMark.visibility = View.GONE
 
             with(binding.llListMoreMark) {
                 tvMoreDescription.text = it.description
                 tvMoreCoordinates.text = TextFormatter.coordinatesToText(it.latitude, it.longitude)
                 tvMoreLikesAndAuthor.text = TextFormatter.likesAndAuthorToText(it.likes, it.user)
+
+                GlobalScope.launch(Dispatchers.Main) {
+                    val imagePath = it.imageUrl
+                    val bitmap: Bitmap? = imagePath?.let { ImageLoader.loadImage(it) }
+                    if (bitmap != null) {
+                        ivMoreImage.setImageBitmap(bitmap)
+                    }
+                }
 
                 btnMoreClose.setOnClickListener {
                     binding.flListMoreMark.visibility = View.GONE
@@ -90,8 +105,11 @@ class ListFragment : Fragment() {
     private fun setButtons() {
         binding.btnAdd.setOnClickListener {
             binding.flAddMark.visibility = View.VISIBLE
+            binding.flListMoreMark.visibility = View.GONE
         }
         binding.llAddMark.btnAddLl.setOnClickListener {
+            HideKeyboard.hideKeyboard(requireActivity())
+            binding.flAddMark.visibility = View.GONE
             createMark()
         }
         binding.llAddMark.btnAddClose.setOnClickListener {
@@ -175,6 +193,6 @@ class ListFragment : Fragment() {
     }
 
     companion object {
-        private const val PICK_IMAGE_REQUEST_CODE = 123
+        const val PICK_IMAGE_REQUEST_CODE = 123
     }
 }

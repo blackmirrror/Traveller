@@ -12,7 +12,8 @@ import ru.blackmirrror.traveller.domain.repositories.MarkRepository
 val dataModule = module {
     single<MarkRepository> {
         MarkRepositoryImpl(
-            service = get()
+            service = get(),
+            authRepository = get()
         )
     }
 

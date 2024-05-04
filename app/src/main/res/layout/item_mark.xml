@@ -19,7 +19,7 @@
         android:textColor="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/item_favorite_btn"
+        app:layout_constraintEnd_toStartOf="@id/item_delete_btn"
         tools:text="Mark description description description description des "/>
 
     <TextView
@@ -30,6 +30,16 @@
         app:layout_constraintTop_toBottomOf="@id/tv_mark_description"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="8 Likes, author"/>
+
+    <ImageButton
+        android:id="@+id/item_delete_btn"
+        android:padding="4dp"
+        android:foregroundGravity="top"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintTop_toTopOf="@id/tv_mark_description"
+        app:layout_constraintEnd_toStartOf="@id/item_favorite_btn"
+        style="@style/ImageButton.Primary"/>
 
     <ImageButton
         android:id="@+id/item_favorite_btn"

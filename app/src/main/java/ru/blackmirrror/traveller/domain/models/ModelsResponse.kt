@@ -20,8 +20,8 @@ data class Mark (
     @SerializedName("imageUrl"    ) var imageUrl    : String?  = null,
     @SerializedName("likes"       ) var likes       : Int = 0,
     @SerializedName("user"        ) var user        : UserResponse?  = null,
-    @SerializedName("dateChanges" ) var dateChanges : Int?    = null,
-    @SerializedName("dateCreate"  ) var dateCreate  : Int?    = null
+    @SerializedName("dateChanges" ) var dateChanges : Long?    = null,
+    @SerializedName("dateCreate"  ) var dateCreate  : Long?    = null
 )
 
 data class Favorite (

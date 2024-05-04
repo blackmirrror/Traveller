@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryContainer"
@@ -26,13 +27,13 @@
         android:layout_marginHorizontal="8dp"
         app:layout_constraintTop_toTopOf="@id/et_map_search"
         app:layout_constraintStart_toEndOf="@id/et_map_search"
-        app:layout_constraintEnd_toStartOf="@id/btn_filter"
+        app:layout_constraintEnd_toStartOf="@id/btn_favorite"
         style="@style/ImageButton.Blue"/>
 
     <ImageButton
-        android:id="@+id/btn_filter"
+        android:id="@+id/btn_favorite"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_filter"
+        android:src="@drawable/ic_favorite"
         app:layout_constraintTop_toTopOf="@id/et_map_search"
         app:layout_constraintStart_toEndOf="@id/btn_map_search"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,13 +53,13 @@
         app:layout_constraintStart_toStartOf="@id/et_map_search"
         app:layout_constraintTop_toBottomOf="@id/et_map_search"/>
 
-    <ImageButton
-        android:id="@+id/btn_favorite"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintTop_toBottomOf="@id/btn_list"
-        app:layout_constraintStart_toStartOf="@id/et_map_search"
-        style="@style/ImageButton.Primary"/>
+<!--    <ImageButton-->
+<!--        android:id="@+id/btn_favorite"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:src="@drawable/ic_favorite"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/btn_list"-->
+<!--        app:layout_constraintStart_toStartOf="@id/et_map_search"-->
+<!--        style="@style/ImageButton.Primary"/>-->
 
     <ImageButton
         android:id="@+id/btn_account"
@@ -67,6 +68,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         style="@style/ImageButton.Primary"/>
+
+    <FrameLayout
+        android:id="@+id/fl_map_add_mark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <include
+            android:id="@+id/ll_map_add_mark"
+            layout="@layout/layout_add_mark_list"/>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fl_map_more_mark"

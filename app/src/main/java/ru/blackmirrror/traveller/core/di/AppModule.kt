@@ -10,33 +10,30 @@ import ru.blackmirrror.traveller.features.register.RegisterViewModel
 val appModule = module {
     viewModel {
         MapViewModel(
-            getAllMarksUseCase = get(),
             createMarkUseCase = get(),
-            isGuestUseCase = get(),
-            isLoginUserUseCase = get(),
-            getMarksByParameterUseCase = get()
+            getMarksByParameterUseCase = get(),
+            authRepository = get(),
+            markRepository = get()
         )
     }
 
     viewModel {
         RegisterViewModel(
             registerUserUseCase = get(),
-            rememberAsGuest = get()
+            authRepository = get()
         )
     }
 
     viewModel {
         LoginViewModel(
             loginUserUseCase = get(),
-            rememberAsGuest = get()
+            authRepository = get()
         )
     }
 
     viewModel {
         AccountViewModel(
-            logoutUserUseCase = get(),
-            isGuestUseCase = get(),
-            getCurrentUserUseCase = get()
+            authRepository = get()
         )
     }
 }

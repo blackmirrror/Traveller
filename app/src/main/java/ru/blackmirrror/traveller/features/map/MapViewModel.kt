@@ -17,30 +17,31 @@ import ru.blackmirrror.traveller.domain.models.ResultState
 import ru.blackmirrror.traveller.domain.models.ServerError
 import ru.blackmirrror.traveller.domain.models.SortType
 import ru.blackmirrror.traveller.domain.models.UserResponse
+import ru.blackmirrror.traveller.domain.repositories.AuthRepository
+import ru.blackmirrror.traveller.domain.repositories.MarkRepository
 import ru.blackmirrror.traveller.domain.usecases.CreateMarkUseCase
-import ru.blackmirrror.traveller.domain.usecases.GetAllMarksUseCase
 import ru.blackmirrror.traveller.domain.usecases.GetMarksByParameterUseCase
-import ru.blackmirrror.traveller.domain.usecases.IsGuestUseCase
-import ru.blackmirrror.traveller.domain.usecases.IsLoginUserUseCase
 
 class MapViewModel(
-    private val getAllMarksUseCase: GetAllMarksUseCase,
     private val createMarkUseCase: CreateMarkUseCase,
-    private val isGuestUseCase: IsGuestUseCase,
-    private val isLoginUserUseCase: IsLoginUserUseCase,
-    private val getMarksByParameterUseCase: GetMarksByParameterUseCase
+    private val getMarksByParameterUseCase: GetMarksByParameterUseCase,
+    private val authRepository: AuthRepository,
+    private val markRepository: MarkRepository
 ) : ViewModel() {
 
     private val _allMarks = MutableLiveData<List<Mark>?>()
+
+    private val _currentMarks = MutableLiveData<List<Mark>?>()
+    val currentMarks: LiveData<List<Mark>?> = _currentMarks
+
+    private val _favoriteMarks = MutableLiveData<List<Mark>?>()
+    val favoriteMarks: LiveData<List<Mark>?> = _favoriteMarks
 
     private val _isLoggingUser = MutableLiveData<Boolean>()
     val isLoggingUser: LiveData<Boolean> = _isLoggingUser
 
     private val _isCurrentUser = MutableLiveData<UserResponse>()
     val isCurrentUser: LiveData<UserResponse> = _isCurrentUser
-
-    private val _currentMarks = MutableLiveData<List<Mark>?>()
-    val currentMarks: LiveData<List<Mark>?> = _currentMarks
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
@@ -55,10 +56,10 @@ class MapViewModel(
 
     private fun initUser() {
         viewModelScope.launch {
-            if (isGuestUseCase.invoke())
+            if (authRepository.isGuest())
                 _isLoggingUser.postValue(true)
             else {
-                val res = isLoginUserUseCase.invoke()
+                val res = authRepository.isLoginUser()
                 if (res is ResultState.Success) {
                     _isLoggingUser.postValue(true)
                 }
@@ -79,7 +80,7 @@ class MapViewModel(
     private fun fetchData() {
         viewModelScope.launch {
             _loading.postValue(true)
-            when (val marks = getAllMarksUseCase.invoke()) {
+            when (val marks = markRepository.getAllMarks()) {
                 is ResultState.Success -> {
                     _allMarks.postValue(marks.data)
                     _currentMarks.postValue(marks.data)

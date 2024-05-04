@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.blackmirrror.traveller.domain.models.Conflict
 import ru.blackmirrror.traveller.domain.models.EmptyFields
-import ru.blackmirrror.traveller.domain.models.ErrorType
-import ru.blackmirrror.traveller.domain.models.NoContent
 import ru.blackmirrror.traveller.domain.models.NoInternet
 import ru.blackmirrror.traveller.domain.models.NotFound
 import ru.blackmirrror.traveller.domain.models.OtherError
@@ -17,11 +14,10 @@ import ru.blackmirrror.traveller.domain.models.ServerError
 import ru.blackmirrror.traveller.domain.models.UserRequest
 import ru.blackmirrror.traveller.domain.repositories.AuthRepository
 import ru.blackmirrror.traveller.domain.usecases.LoginUserUseCase
-import ru.blackmirrror.traveller.domain.usecases.RememberAsGuest
 
 class LoginViewModel(
     private val loginUserUseCase: LoginUserUseCase,
-    private val rememberAsGuest: RememberAsGuest
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     private val _isLogin = MutableLiveData<Boolean>()
@@ -44,7 +40,7 @@ class LoginViewModel(
     }
 
     fun rememberAsGuest() {
-        rememberAsGuest.invoke()
+        authRepository.rememberAsGuest()
     }
 
     private fun <T> handleError(result: ResultState<T>) {

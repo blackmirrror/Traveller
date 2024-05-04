@@ -1,13 +1,20 @@
 package ru.blackmirrror.traveller.features.map
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.database.Cursor
+import android.graphics.Bitmap
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,27 +23,44 @@ import androidx.navigation.fragment.findNavController
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.layers.GeoObjectTapListener
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.MapObjectCollection
 import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.runtime.image.ImageProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.blackmirrror.traveller.R
 import ru.blackmirrror.traveller.databinding.FragmentMapBinding
 import ru.blackmirrror.traveller.domain.models.Mark
 import ru.blackmirrror.traveller.domain.models.SortType
+import ru.blackmirrror.traveller.features.utils.HideKeyboard
+import ru.blackmirrror.traveller.features.utils.ImageLoader
+import ru.blackmirrror.traveller.features.utils.ImageLoader.loadImage
 import ru.blackmirrror.traveller.features.utils.TextFormatter
+import kotlin.coroutines.suspendCoroutine
 
 class MapFragment : Fragment() {
 
     private lateinit var binding: FragmentMapBinding
     private val viewModel by sharedViewModel<MapViewModel>()
 
+    private var imagePath: String? = null
+
     private lateinit var pinsCollection: MapObjectCollection
+
     private val placemarkTapListener = MapObjectTapListener { mapObject, _ ->
         (mapObject.userData as? Long)?.let { onMarkClick(it) }
         true
     }
+    private val geoObjectTapListener = GeoObjectTapListener { geoObject ->
+        geoObject.geoObject.geometry[0].point?.let { showAddMark(it) }
+        true
+    }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +82,8 @@ class MapFragment : Fragment() {
 
     private fun initCollection() {
         pinsCollection = binding.mapView.mapWindow.map.mapObjects.addCollection()
+        binding.mapView.mapWindow.map.addTapListener(geoObjectTapListener)
+
     }
 
     private fun setNavigation() {
@@ -134,15 +160,54 @@ class MapFragment : Fragment() {
         }
     }
 
+    private fun showAddMark(point: Point) {
+        binding.flMapMoreMark.visibility = View.GONE
+        binding.flMapAddMark.visibility = View.VISIBLE
+        with(binding.llMapAddMark) {
+            etAddLatitude.setText(point.latitude.toString())
+            etAddLongitude.setText(point.longitude.toString())
+            btnAddClose.setOnClickListener {
+                binding.flMapAddMark.visibility = View.GONE
+            }
+            btnAddLl.setOnClickListener {
+                HideKeyboard.hideKeyboard(requireActivity())
+                binding.flMapAddMark.visibility = View.GONE
+                createMark()
+            }
+            btnImgLl.setOnClickListener {
+                openGallery()
+            }
+        }
+        HideKeyboard.hideKeyboard(requireActivity())
+    }
+
+    private fun createMark() {
+        viewModel.createMark(
+            latitude = binding.llMapAddMark.etAddLatitude.text.toString(),
+            longitude = binding.llMapAddMark.etAddLongitude.text.toString(),
+            description = binding.llMapAddMark.etAddDescription.text.toString(),
+            image = imagePath
+        )
+    }
+
     private fun onMarkClick(markId: Long) {
         val mark = viewModel.getMarkById(markId)
         if (mark != null) {
             binding.flMapMoreMark.visibility = View.VISIBLE
+            binding.flMapAddMark.visibility = View.GONE
 
             with(binding.llMapMoreMark) {
                 tvMoreDescription.text = mark.description
                 tvMoreCoordinates.text = TextFormatter.coordinatesToText(mark.latitude, mark.longitude)
                 tvMoreLikesAndAuthor.text = TextFormatter.likesAndAuthorToText(mark.likes, mark.user)
+
+                GlobalScope.launch(Dispatchers.Main) {
+                    val imagePath = mark.imageUrl
+                    val bitmap: Bitmap? = imagePath?.let { loadImage(it) }
+                    if (bitmap != null) {
+                        ivMoreImage.setImageBitmap(bitmap)
+                    }
+                }
 
                 btnMoreClose.setOnClickListener {
                     binding.flMapMoreMark.visibility = View.GONE
@@ -152,12 +217,6 @@ class MapFragment : Fragment() {
     }
 
     private fun setFilter() {
-        binding.btnFilter.setOnClickListener {
-            binding.flFilterMap.visibility = if (binding.flFilterMap.visibility == View.VISIBLE)
-                View.GONE
-            else
-                View.VISIBLE
-        }
         binding.llFilterMap.spSortList.setSelection(0)
 
         binding.btnMapSearch.setOnClickListener {
@@ -184,6 +243,32 @@ class MapFragment : Fragment() {
         binding.flFilterMap.visibility = View.GONE
     }
 
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, ListFragment.PICK_IMAGE_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == ListFragment.PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri: Uri = data.data!!
+
+            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+            val cursor: Cursor? = requireActivity().contentResolver.query(
+                selectedImageUri,
+                filePathColumn,
+                null,
+                null,
+                null
+            )
+            cursor?.moveToFirst()
+            val columnIndex: Int = cursor?.getColumnIndex(filePathColumn[0]) ?: 0
+            imagePath = cursor?.getString(columnIndex)
+            cursor?.close()
+        }
+    }
+
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
@@ -203,5 +288,7 @@ class MapFragment : Fragment() {
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1001
         private val DEFAULT_POINT = Point(55.751280, 37.629720)
+
+        private const val PICK_IMAGE_REQUEST_CODE = 123
     }
 }
