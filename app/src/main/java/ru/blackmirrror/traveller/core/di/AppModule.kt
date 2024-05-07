@@ -12,6 +12,7 @@ val appModule = module {
         MapViewModel(
             createMarkUseCase = get(),
             getMarksByParameterUseCase = get(),
+            mapMarksAndFavoriteUseCase = get(),
             authRepository = get(),
             markRepository = get()
         )
@@ -33,7 +34,8 @@ val appModule = module {
 
     viewModel {
         AccountViewModel(
-            authRepository = get()
+            authRepository = get(),
+            markRepository = get()
         )
     }
 }

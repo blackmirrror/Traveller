@@ -11,10 +11,10 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,13 +34,13 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.blackmirrror.traveller.R
 import ru.blackmirrror.traveller.databinding.FragmentMapBinding
+import ru.blackmirrror.traveller.databinding.LayoutMoreAboutMarkBinding
 import ru.blackmirrror.traveller.domain.models.Mark
+import ru.blackmirrror.traveller.domain.models.MarkLocal
 import ru.blackmirrror.traveller.domain.models.SortType
 import ru.blackmirrror.traveller.features.utils.HideKeyboard
-import ru.blackmirrror.traveller.features.utils.ImageLoader
 import ru.blackmirrror.traveller.features.utils.ImageLoader.loadImage
 import ru.blackmirrror.traveller.features.utils.TextFormatter
-import kotlin.coroutines.suspendCoroutine
 
 class MapFragment : Fragment() {
 
@@ -147,7 +147,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun setMarks(marks: List<Mark>) {
+    private fun setMarks(marks: List<MarkLocal>) {
         pinsCollection.clear()
         val imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.ic_mark)
 
@@ -212,7 +212,40 @@ class MapFragment : Fragment() {
                 btnMoreClose.setOnClickListener {
                     binding.flMapMoreMark.visibility = View.GONE
                 }
+
+                btnFavoriteMore.setOnClickListener {
+                    viewModel.likeMark(mark)
+                    btnFavoriteMore.setImageResource(R.drawable.ic_favorite_is)
+                }
+
+                setButtons(this, mark)
             }
+        }
+    }
+
+    private fun setButtons(view: LayoutMoreAboutMarkBinding, mark: MarkLocal) {
+        if (viewModel.getCurrentUserId() != -1L) {
+            view.btnDeleteMore.visibility = View.VISIBLE
+            if ((mark.user?.id ?: -2) == viewModel.getCurrentUserId()) {
+                view.btnDeleteMore.apply {
+                    setImageResource(R.drawable.ic_delete)
+                    setOnClickListener {
+                        mark.id?.let { viewModel.deleteMark(it) }
+                        binding.flMapMoreMark.visibility = View.GONE
+                    }
+                }
+            }
+            else {
+                view.btnDeleteMore.apply {
+                    setImageResource(R.drawable.ic_subscribe)
+                    setOnClickListener {
+                        mark.user?.let { sub -> viewModel.addToSubscribe(sub) }
+                    }
+                }
+            }
+        }
+        else {
+            view.btnDeleteMore.visibility = View.GONE
         }
     }
 

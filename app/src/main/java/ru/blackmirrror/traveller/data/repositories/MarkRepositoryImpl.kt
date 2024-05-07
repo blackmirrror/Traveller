@@ -7,11 +7,14 @@ import com.google.firebase.storage.ktx.storage
 import ru.blackmirrror.traveller.data.remote.ApiService
 import ru.blackmirrror.traveller.domain.models.Favorite
 import ru.blackmirrror.traveller.domain.models.Mark
+import ru.blackmirrror.traveller.domain.models.MarkLocal
 import ru.blackmirrror.traveller.domain.models.NoContent
 import ru.blackmirrror.traveller.domain.models.NoInternet
 import ru.blackmirrror.traveller.domain.models.OtherError
 import ru.blackmirrror.traveller.domain.models.ResultState
 import ru.blackmirrror.traveller.domain.models.ServerError
+import ru.blackmirrror.traveller.domain.models.Subscribe
+import ru.blackmirrror.traveller.domain.models.UserResponse
 import ru.blackmirrror.traveller.domain.repositories.AuthRepository
 import ru.blackmirrror.traveller.domain.repositories.MarkRepository
 import java.io.File
@@ -85,9 +88,13 @@ internal class MarkRepositoryImpl(
         }
     }
 
-    override suspend fun getFavoriteMarksByUserId(id: Long): ResultState<List<Mark>> {
+    override suspend fun getFavoriteMarksByUserId(): ResultState<List<Mark>> {
         return try {
-            ApiUtils.handleResponse(service.getAllFavoriteMarksByUserId(id))
+            val user = authRepository.getCurrentUser()
+            if (user != null) {
+                ApiUtils.handleResponse(service.getAllFavoriteMarksByUserId(user.id))
+            }
+            ResultState.Error(OtherError)
         } catch (e: Exception) {
             ResultState.Error(NoInternet)
         }
@@ -117,5 +124,37 @@ internal class MarkRepositoryImpl(
         } catch (e: Exception) {
             return ResultState.Error(NoInternet)
         }
+    }
+
+    override suspend fun getSubscribesByUserId(): ResultState<List<UserResponse>> {
+        return try {
+            val user = authRepository.getCurrentUser()
+            if (user != null) {
+                ApiUtils.handleResponse(service.getAllSubscribesByUserId(user.id))
+            }
+            else {
+                ResultState.Error(OtherError)
+            }
+        } catch (e: Exception) {
+            ResultState.Error(NoInternet)
+        }
+    }
+
+    override suspend fun addSubscribe(subscribe: UserResponse): ResultState<Subscribe> {
+        return try {
+            val user = authRepository.getCurrentUser()
+            if (user != null) {
+                ApiUtils.handleResponse(service.createSubscribe(
+                    Subscribe(user = user, subscribe = subscribe)
+                ))
+            }
+            ResultState.Error(OtherError)
+        } catch (e: Exception) {
+            ResultState.Error(NoInternet)
+        }
+    }
+
+    override suspend fun deleteSubscribe(id: Long): ResultState<Unit> {
+        TODO("Not yet implemented")
     }
 }

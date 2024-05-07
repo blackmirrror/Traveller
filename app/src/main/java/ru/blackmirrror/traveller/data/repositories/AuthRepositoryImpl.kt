@@ -55,8 +55,9 @@ class AuthRepositoryImpl(
     }
 
     override fun getCurrentUser(): UserResponse? {
-        if (userPrefs.id != -1L && userPrefs.username != null)
+        if (userPrefs.id != -1L && userPrefs.username != null) {
             return UserResponse(userPrefs.id, userPrefs.username!!)
+        }
         return null
     }
 

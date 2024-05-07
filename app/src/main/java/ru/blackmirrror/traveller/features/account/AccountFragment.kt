@@ -15,6 +15,8 @@ class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
     private val viewModel by viewModel<AccountViewModel>()
 
+    private lateinit var adapter: SubscribeAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,6 +29,7 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setNavigation()
+        setRecycler()
         observeData()
     }
 
@@ -40,6 +43,15 @@ class AccountFragment : Fragment() {
         }
     }
 
+    private fun setRecycler() {
+        adapter = SubscribeAdapter()
+        adapter.onSubscribeItemClickListener = { it ->
+            viewModel.deleteSubscribe(it.id)
+        }
+
+        binding.rvAccSubscribes.adapter = adapter
+    }
+
     private fun observeData() {
         viewModel.isGuest.observe(viewLifecycleOwner) {
             if (it) {
@@ -49,6 +61,10 @@ class AccountFragment : Fragment() {
         }
         viewModel.currentUser.observe(viewLifecycleOwner) {
             binding.tvAccName.text = it?.username ?: "Гость"
+        }
+
+        viewModel.subscribes.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 }

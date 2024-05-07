@@ -1,6 +1,7 @@
 package ru.blackmirrror.traveller.domain.usecases
 
 import ru.blackmirrror.traveller.domain.models.Mark
+import ru.blackmirrror.traveller.domain.models.MarkLocal
 import ru.blackmirrror.traveller.domain.models.SortType
 
 class GetMarksByParameterUseCase {
@@ -8,8 +9,8 @@ class GetMarksByParameterUseCase {
     operator fun invoke(
         sortType: SortType,
         word: String?,
-        allMarks: List<Mark>
-    ): List<Mark> {
+        allMarks: List<MarkLocal>
+    ): List<MarkLocal> {
         var result = allMarks
         if (word != null) {
             result = result.filter {

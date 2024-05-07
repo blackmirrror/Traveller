@@ -33,13 +33,13 @@ interface ApiService {
     @DELETE("marks/{id}")
     suspend fun deleteMark(@Path("id") id: Long): Response<Unit>
 
-    @GET("favorite/{id}")
+    @GET("marks/favorite/{id}")
     suspend fun getAllFavoriteMarksByUserId(@Path("id") id: Long): Response<List<Mark>>
 
-    @POST("favorite")
+    @POST("marks/favorite")
     suspend fun createFavorite(@Body favorite: Favorite): Response<Favorite>
 
-    @DELETE("favorite/{id}")
+    @DELETE("marks/favorite/{id}")
     suspend fun deleteFavorite(@Path("id") id: Long): Response<Unit>
 
     @GET("subscribes/{id}")

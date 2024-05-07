@@ -4,6 +4,7 @@ import org.koin.dsl.module
 import ru.blackmirrror.traveller.domain.usecases.CreateMarkUseCase
 import ru.blackmirrror.traveller.domain.usecases.GetMarksByParameterUseCase
 import ru.blackmirrror.traveller.domain.usecases.LoginUserUseCase
+import ru.blackmirrror.traveller.domain.usecases.MapMarksAndFavoriteUseCase
 import ru.blackmirrror.traveller.domain.usecases.RegisterUserUseCase
 
 val domainModule = module {
@@ -22,5 +23,9 @@ val domainModule = module {
 
     factory {
         GetMarksByParameterUseCase()
+    }
+
+    factory {
+        MapMarksAndFavoriteUseCase()
     }
 }

@@ -4,16 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.blackmirrror.traveller.R
 import ru.blackmirrror.traveller.domain.models.Mark
+import ru.blackmirrror.traveller.domain.models.MarkLocal
 import ru.blackmirrror.traveller.features.utils.TextFormatter
 
-class MarksAdapter: ListAdapter<Mark, MarksAdapter.MarksViewHolder>(MarkItemCallback()) {
+class MarksAdapter: ListAdapter<MarkLocal, MarksAdapter.MarksViewHolder>(MarkItemCallback()) {
 
-    var onMarkItemClickListener: ((Mark) -> Unit)? = null
+    var onMarkItemClickListener: ((MarkLocal) -> Unit)? = null
+    var onLikeClickListener: ((MarkLocal) -> Unit)? = null
 
     class MarksViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val description = itemView.findViewById<TextView>(R.id.tv_mark_description)
@@ -31,9 +34,15 @@ class MarksAdapter: ListAdapter<Mark, MarksAdapter.MarksViewHolder>(MarkItemCall
         with(holder) {
             description.text = mark.description
             likesAndAuthor.text = TextFormatter.likesAndAuthorToText(mark.likes, mark.user)
-            like.setImageResource(R.drawable.ic_favorite)
+            if (mark.isFavorite)
+                like.setImageResource(R.drawable.ic_favorite_is)
+            else
+                like.setImageResource(R.drawable.ic_favorite)
             itemView.setOnClickListener {
                 onMarkItemClickListener?.invoke(mark)
+            }
+            like.setOnClickListener {
+                onLikeClickListener?.invoke(mark)
             }
         }
     }

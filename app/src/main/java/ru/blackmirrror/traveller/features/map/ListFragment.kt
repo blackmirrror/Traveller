@@ -15,13 +15,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import ru.blackmirrror.traveller.R
 import ru.blackmirrror.traveller.databinding.FragmentListBinding
+import ru.blackmirrror.traveller.databinding.LayoutMoreAboutMarkBinding
+import ru.blackmirrror.traveller.domain.models.Mark
+import ru.blackmirrror.traveller.domain.models.MarkLocal
 import ru.blackmirrror.traveller.domain.models.SortType
 import ru.blackmirrror.traveller.features.utils.HideKeyboard
 import ru.blackmirrror.traveller.features.utils.ImageLoader
@@ -83,14 +89,51 @@ class ListFragment : Fragment() {
                 btnMoreClose.setOnClickListener {
                     binding.flListMoreMark.visibility = View.GONE
                 }
+
+                btnFavoriteMore.setOnClickListener { view ->
+                    viewModel.likeMark(it)
+                    btnFavoriteMore.setImageResource(R.drawable.ic_favorite_is)
+                }
+
+                setButtons(this, it)
             }
+        }
+
+        marksAdapter.onLikeClickListener = {
+            viewModel.likeMark(it)
         }
 
         binding.rvList.adapter = marksAdapter
     }
 
+    private fun setButtons(view: LayoutMoreAboutMarkBinding, mark: MarkLocal) {
+        if (viewModel.getCurrentUserId() != -1L) {
+            view.btnDeleteMore.visibility = View.VISIBLE
+            if ((mark.user?.id ?: -2) == viewModel.getCurrentUserId()) {
+                view.btnDeleteMore.apply {
+                    setImageResource(R.drawable.ic_delete)
+                    setOnClickListener {
+                        mark.id?.let { viewModel.deleteMark(it) }
+                        binding.flListMoreMark.visibility = View.GONE
+                    }
+                }
+            }
+            else {
+                view.btnDeleteMore.apply {
+                    Log.d("my", "setButtons: no")
+                    setImageResource(R.drawable.ic_subscribe)
+                    setOnClickListener {
+                        mark.user?.let { sub -> viewModel.addToSubscribe(sub) }
+                    }
+                }
+            }
+        }
+        else {
+            view.btnDeleteMore.visibility = View.GONE
+        }
+    }
+
     private fun observeData() {
-        //viewModel.getMarks(sortType = SortType.NONE)
         viewModel.loading.observe(viewLifecycleOwner) {
             binding.pbLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
